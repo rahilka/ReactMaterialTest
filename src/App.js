@@ -13,32 +13,57 @@ class App extends Component {
     super(props);
 
     this.state = {
-      item: '',
-      date: null,
-      time: null
+      todo: {
+        value: '',
+        date: null,
+        time: null
+      },
+      list: []
     };
 
     this.handleSubmit = this.handleSubmit.bind(this);
   }
 
   handleDatePickerChange = (event, date) => {
-    this.setState({ date });
+    this.setState({ 
+      ...this.state,
+      todo: {
+        ...this.state.todo,
+        date
+      }
+    });
   };
 
   handleTimePickerChange = (event, time) => {
-    this.setState({ time });
+    this.setState({ 
+      ...this.state,
+      todo: {
+        ...this.state.todo,
+        time
+      }
+    });
   };
 
   handleInputItem = (event) => {
-    this.setState({ item: event.target.value });
+    this.setState({ 
+      ...this.state,
+      todo: {
+        ...this.state.todo,
+        value: event.target.value
+      }
+    });
   };
 
-  handleSubmit(e) {
+  handleSubmit = (e) => {
     e.preventDefault();
-    console.log('submitted...');
+    console.log('LIST: ', this.state.list);
+    this.setState({
+      list: [...this.state.list, this.state.todo],
+    });
   }
   
   render() {
+    
     return (
       <MuiThemeProvider>  
         <div
@@ -53,7 +78,7 @@ class App extends Component {
             <TextField
               id="text-field-controlled"
               style={marginStyle}
-              value={this.state.item}
+              value={this.state.todo.value}
               onChange={this.handleInputItem}                           
             />
           </div>
@@ -63,7 +88,7 @@ class App extends Component {
             <DatePicker
               style={marginStyle}          
               floatingLabelText="Ranged Date Picker"
-              value={this.state.date}
+              value={this.state.todo.date}
               onChange={this.handleDatePickerChange}
             />
           </div>
@@ -73,7 +98,7 @@ class App extends Component {
             <TimePicker
               hintText="12hr Format"
               style={marginStyle}
-              value={this.state.time}            
+              value={this.state.todo.time}            
               onChange={this.handleTimePickerChange}
             />
           </div>
@@ -88,7 +113,7 @@ class App extends Component {
             <RaisedButton 
               label="Submit" 
               primary={true} 
-              onChange={this.handleSubmit}          
+              onClick={this.handleSubmit}          
               style={{
                 display: 'flex',
                 alignItems: 'center',
@@ -97,7 +122,9 @@ class App extends Component {
               }} 
             />
           </div>
-          {}
+          <div>
+            <p></p>
+          </div>
         </div>
       </MuiThemeProvider>
     );
