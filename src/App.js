@@ -57,11 +57,8 @@ class App extends Component {
 
   handleSubmit = (e) => {
     e.preventDefault();
-    console.log('LIST: ', this.state.list);
-    console.log('TODO: ', this.state.todo);
     this.setState(
-      { list: [...this.state.list, this.state.todo] },
-      () => console.log('List after update: ', this.state.list)
+      { list: [...this.state.list, this.state.todo] }
     );
   }
   
@@ -125,13 +122,17 @@ class App extends Component {
               }} 
             />
           </div>
-          { this.state.list.map((todo, key) => {
+          <br />
+          { this.state.list.map((todo) => {
             return (
-              <li key={key}>
-                <p>Value: {todo.value}</p>
-                <p>Date: {moment(todo.date).format('DD-MM-YY HH:mm:ss')}</p>
-                <p>Time: {moment(todo.time).format('LTS')}</p>
-              </li>
+              <ul style={ulStyle} key={todo.value}>
+                <li>
+                  <p>Value: {todo.value}</p>
+                  <p>Date: {moment(todo.date).format('DD-MM-YY HH:mm:ss')}</p>
+                  <p>Time: {moment(todo.time).format('LTS')}</p>
+                  <hr />
+                </li>  
+              </ul>
             )
           }) }
         </div>
@@ -148,6 +149,10 @@ const style = {
 
 const marginStyle = {
   margin: '20px'
+}
+
+const ulStyle= {
+  listStyleType: 'none'
 }
 
 export default App;
