@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import moment from 'moment';
 // import logo from './logo.svg';
 // import './App.css';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
@@ -57,9 +58,11 @@ class App extends Component {
   handleSubmit = (e) => {
     e.preventDefault();
     console.log('LIST: ', this.state.list);
-    this.setState({
-      list: [...this.state.list, this.state.todo],
-    });
+    console.log('TODO: ', this.state.todo);
+    this.setState(
+      { list: [...this.state.list, this.state.todo] },
+      () => console.log('List after update: ', this.state.list)
+    );
   }
   
   render() {
@@ -122,9 +125,15 @@ class App extends Component {
               }} 
             />
           </div>
-          <div>
-            <p></p>
-          </div>
+          { this.state.list.map((todo, key) => {
+            return (
+              <li key={key}>
+                <p>Value: {todo.value}</p>
+                <p>Date: {moment(todo.date).format('DD-MM-YY HH:mm:ss')}</p>
+                <p>Time: {moment(todo.time).format('LTS')}</p>
+              </li>
+            )
+          }) }
         </div>
       </MuiThemeProvider>
     );
